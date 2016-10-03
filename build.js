@@ -20,8 +20,7 @@ var Metalsmith  = require('metalsmith'),
     Handlebars  = require('handlebars'),
     fs          = require('fs'),
     path        = require('path'),
-    myArgs      = require('optimist').argv,
-    config      = require('./config.json');
+    myArgs      = require('optimist').argv;
 
 
 var ENV_PROD  = 'prod',
@@ -34,6 +33,17 @@ var options = {
     port    : myArgs.port || 9000,
     compress: !myArgs.nocompress
 };
+
+var config = (function () {
+    var extend = require('util')._extend;
+    var config = require('./config.json');
+    var o = extend({}, config);
+    if (fs.existsSync('./local.config.json')) {
+        var localConfig = require('./local.config.json');
+        extend(o,  localConfig);
+    }
+    return o;
+})();
 
 var errCb = function (err) {
     if (err) {

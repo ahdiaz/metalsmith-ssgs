@@ -1,5 +1,5 @@
 {
-    "source": "/www/src",
-    "templates": "/www/templates",
-    "destination": "/www/build"
+    "source": "/path/to/source",
+    "templates": "/path/to/templates",
+    "destination": "/path/to/build"
 }
