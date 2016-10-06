@@ -2,7 +2,7 @@ var fs      = require('fs'),
     path    = require('path'),
     myArgs  = require('optimist').argv,
     extend  = require('util')._extend,
-    builder = require('./build.js');
+    builder = require('./builder.js');
 
 
 var config = {
