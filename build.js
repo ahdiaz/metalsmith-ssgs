@@ -1,11 +1,10 @@
 
-// docker run -it --name ssgs-test-5 -v /Users/ahernandez/dev/euler.dev/ssgs:/ssgs -w /ssgs -p 9000:9000 node:5.9.1-wheezy bash
+// docker run --rm -it --name ssgs-test-5 -v /Users/ahernandez/dev/euler/metalsmith-ssgs:/ssgs -v /Users/ahernandez/dev/euler/ahdiaz.euler.es:/www -w /ssgs -p 9000:9000 node:5.9.1-wheezy bash
 
 var Metalsmith  = require('metalsmith'),
     metadata    = require('metalsmith-metadata'),
     markdown    = require('metalsmith-markdown'),
     layouts     = require('metalsmith-layouts'),
-    inplace     = require('metalsmith-in-place'),
     collections = require('metalsmith-collections'),
     permalinks  = require('metalsmith-permalinks'),
     excerpts    = require('metalsmith-better-excerpts'),
@@ -31,24 +30,11 @@ var options = {
     server  : myArgs.server || false,
     host    : myArgs.host || '0.0.0.0',
     port    : myArgs.port || 9000,
-    compress: !myArgs.nocompress
-};
-
-var config = (function () {
-    var extend = require('util')._extend;
-    var config = require('./config.json');
-    var o = extend({}, config);
-    if (fs.existsSync('./local.config.json')) {
-        var localConfig = require('./local.config.json');
-        extend(o,  localConfig);
-    }
-    return o;
-})();
-
-var errCb = function (err) {
-    if (err) {
-        console.log(err);
-    }
+    compress: !myArgs.nocompress,
+    config  : myArgs.config || false,
+    source  : myArgs.source || false,
+    layouts : myArgs.layouts || false,
+    output  : myArgs.output || false
 };
 
 var log = function (tag, message, timestamp) {
@@ -69,11 +55,59 @@ var log = function (tag, message, timestamp) {
     console.log(tag + tstamp + message);
 }
 
-fs.readdir(config.templates + '/partials/', function (error, files) {
+var config = (function () {
+
+    var extend = require('util')._extend;
+    var c = {
+        source: false,
+        layouts: false,
+        output: false
+    };
+
+    if (fs.existsSync(options.config)) {
+        var config = require(path.resolve(options.config));
+        extend(c,  config);
+    }
+
+    c.source = options.source || c.source;
+    c.layouts = options.layouts || c.layouts;
+    c.output = options.output || c.output;
+
+    return c;
+})();
+
+var errors = [];
+
+if (!config.source || !fs.existsSync(options.source)) {
+    errors.push('The source directory was not found: ' + config.source);
+}
+
+if (!config.layouts || !fs.existsSync(options.layouts)) {
+    errors.push('The layouts directory was not found: ' + config.layouts);
+}
+
+if (!config.output || !fs.existsSync(options.output)) {
+    errors.push('The output directory was not found: ' + config.output);
+}
+
+if (errors.length > 0) {
+    errors.forEach(function (err) {
+        log('metalsmith-ssgs', err);
+    });
+    process.exit(1);
+}
+
+var errCb = function (err) {
+    if (err) {
+        console.log(err);
+    }
+};
+
+fs.readdir(config.layouts + '/partials/', function (error, files) {
     for (var i = 0, l = files.length; i < l; i++) {
         var file = files[i];
         var partial = file.replace(/\.[^/.]+$/, '');
-        Handlebars.registerPartial(partial, fs.readFileSync(config.templates + '/partials/' + file).toString());
+        Handlebars.registerPartial(partial, fs.readFileSync(config.layouts + '/partials/' + file).toString());
     }
 });
 
@@ -118,7 +152,7 @@ Handlebars.registerHelper('url', function(url, options) {
 
 Metalsmith(__dirname)
     .source(config.source)
-    .destination(config.destination)
+    .destination(config.output)
     .use(drafts())
     .use(metadata({
         globals: 'globals.yml'
@@ -139,7 +173,7 @@ Metalsmith(__dirname)
         // path for result pages
         path: 'tags/:tag.html',
         // layout to use for tag listing
-        layout: config.templates + '/tag.hbt',
+        layout: config.layouts + '/tag.hbt',
         // provide posts sorted by 'date' (optional)
         sortBy: 'date',
         // sort direction (optional)
@@ -188,8 +222,8 @@ Metalsmith(__dirname)
     .use(layouts({
         engine: 'handlebars',
         // default: 'page.hbt',
-        directory: config.templates,
-        partials: config.templates + '/partials',
+        directory: config.layouts,
+        partials: config.layouts + '/partials',
         // pattern: '*.hbt',
     }))
     .use(stylus({
@@ -217,7 +251,7 @@ Metalsmith(__dirname)
             paths: (function () {
                 var ret = {};
                 ret['${source}/**/*'] = true;
-                ret[config.templates + '/**/*'] = '**/*.md';
+                ret[config.layouts + '/**/*'] = '**/*.md';
                 return ret;
             })(),
             livereload: options.server

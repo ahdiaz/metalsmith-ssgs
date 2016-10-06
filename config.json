@@ -1,5 +1,0 @@
-{
-    "source": "/path/to/source",
-    "templates": "/path/to/templates",
-    "destination": "/path/to/build"
-}
