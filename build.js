@@ -77,18 +77,32 @@ var config = (function () {
 })();
 
 var errors = [];
+var stats;
 
-if (!config.source || !fs.existsSync(options.source)) {
+try {
+    stats = fs.statSync(config.source);
+    if (!stats.isDirectory()) {
+        throw '';
+    }
+} catch (e) {
     errors.push('The source directory was not found: ' + config.source);
 }
 
-if (!config.layouts || !fs.existsSync(options.layouts)) {
+try {
+    stats = fs.statSync(config.layouts);
+    if (!stats.isDirectory()) {
+        throw '';
+    }
+} catch (e) {
     errors.push('The layouts directory was not found: ' + config.layouts);
 }
 
-if (!config.output || !fs.existsSync(options.output)) {
-    errors.push('The output directory was not found: ' + config.output);
-}
+try {
+    stats = fs.statSync(config.output);
+    if (stats.isDirectory()) {
+        log('metalsmith-ssgs', 'WARNING: The output directory already exists: ' + config.output);
+    }
+} catch (e) {}
 
 if (errors.length > 0) {
     errors.forEach(function (err) {
