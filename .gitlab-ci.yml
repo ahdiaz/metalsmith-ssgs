@@ -1,0 +1,10 @@
+image: node:5.9.1-wheezy
+
+Build:
+  stage: build
+  script:
+    - npm install
+    #– SOME TEST
+  #artifacts:
+  #  paths:
+  #    - $CI_PROJECT_DIR
