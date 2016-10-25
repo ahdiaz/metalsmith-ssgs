@@ -83,7 +83,7 @@ var debugFiles = function (options) {
 
 Handlebars.registerHelper('url', function(url, options) {
 
-    var baseUrl = this.globals.url[ENV].replace(/\/$/, '');
+    var baseUrl = this.globals.site.url[ENV].replace(/\/$/, '');
     var parsedUrl = ('/' + Handlebars.escapeExpression(url)).replace(/(\/){2,}/g, '$1');
     parsedUrl = baseUrl + parsedUrl;
 
