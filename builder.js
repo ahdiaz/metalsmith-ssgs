@@ -135,7 +135,7 @@ var build = function (config) {
             // path for result pages
             path: 'tags/:tag.html',
             // layout to use for tag listing
-            layout: config.layouts + '/tag.hbt',
+            layout: config.layouts + '/tags.hbt',
             // provide posts sorted by 'date' (optional)
             sortBy: 'date',
             // sort direction (optional)
@@ -183,10 +183,13 @@ var build = function (config) {
         }]))
         .use(layouts({
             engine: 'handlebars',
-            // default: 'page.hbt',
+            default: 'main.hbt',
             directory: config.layouts,
             partials: config.partials,
-            // pattern: '*.hbt',
+            pattern: [
+                '**/*.html',
+                '**/*.php',
+            ]
         }))
         .use(stylus({
             // Set stylus output to compressed
