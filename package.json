@@ -19,10 +19,10 @@
     "metalsmith-stylus": "^2.0.0",
     "metalsmith-tags": "^1.2.1",
     "metalsmith-watch": "^1.0.1",
+    "moment": "^2.15.2",
     "optimist": "^0.6.1"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "node build.js",
     "server": "node build.js --server"

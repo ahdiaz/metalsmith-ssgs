@@ -13,6 +13,7 @@ var Metalsmith  = require('metalsmith'),
     watch       = require('metalsmith-watch'),
     msIf        = require('metalsmith-if'),
     chalk       = require('chalk'),
+    moment      = require('moment'),
     Handlebars  = require('handlebars'),
     fs          = require('fs'),
     path        = require('path');
@@ -106,6 +107,11 @@ Handlebars.registerHelper('url', function() {
     }
 
     return new Handlebars.SafeString(parsedUrl);
+});
+
+Handlebars.registerHelper('formatDate', function (date, format) {
+    var mmnt = moment(date);
+    return mmnt.format(format);
 });
 
 var build = function (config) {
