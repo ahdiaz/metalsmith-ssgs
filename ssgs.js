@@ -13,6 +13,7 @@ var config = {
     config  : myArgs.config || false,
     source  : myArgs.source || false,
     layouts : myArgs.layouts || false,
+    bundles : myArgs.bundles || false,
     output  : myArgs.output || false
 };
 
@@ -21,6 +22,7 @@ var directories = (function () {
     var c = {
         source: false,
         layouts: false,
+        bundles: false,
         output: false
     };
 
@@ -31,6 +33,7 @@ var directories = (function () {
 
     c.source = config.source || c.source;
     c.layouts = config.layouts || c.layouts;
+    c.bundles = config.bundles || c.bundles;
     c.output = config.output || c.output;
     c.partials = c.layouts + '/partials';
 
@@ -69,6 +72,17 @@ try {
 
 } catch (e) {
     errors.push('The layouts directory was not found: ' + config.layouts);
+}
+
+try {
+    stats = fs.statSync(config.bundles);
+    if (!stats.isDirectory()) {
+        builder.log('metalsmith-ssgs', 'NOTICE: The bundles directory was not found: ' + config.bundles);
+        config.bundles = null;
+    }
+} catch (e) {
+    builder.log('metalsmith-ssgs', 'NOTICE: The bundles directory was not found: ' + config.bundles);
+    config.bundles = null;
 }
 
 try {
