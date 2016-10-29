@@ -363,8 +363,9 @@ var build = function (config) {
                 // },
                 paths: (function () {
                     var ret = {};
-                    ret['${source}/**/*'] = true;
-                    ret[config.layouts + '/**/*'] = '**/*.md';
+                    ret[config.source + '/**/*'] = '**/*.md';
+                    ret[config.layouts + '/**/*'] = '**/*.hbt';
+                    ret[config.bundles + '/**/*'] = '**/*.html';
                     return ret;
                 })(),
                 livereload: config.server
