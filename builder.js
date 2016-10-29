@@ -82,6 +82,30 @@ var debugFiles = function (options) {
     };
 };
 
+var hbtmd = function (options) {
+
+    options = options || {};
+
+    return function (files, metalsmith, done) {
+
+        setImmediate(done);
+        var meta = metalsmith.metadata();
+
+        Object.keys(files).forEach(function (key) {
+
+            var file = files[key];
+            var source = file.contents.toString();
+            var template = Handlebars.compile(source, options);
+            var data = Object.assign({}, meta, file);
+
+            try {
+                file.contents = new Buffer(template(data));
+            } catch (e) {
+                log('metalsmith-hbtmd', e.message);
+            }
+        });
+    };
+};
 Handlebars.registerHelper('url', function() {
 
     var parts = [];
@@ -128,6 +152,9 @@ var build = function (config) {
         // .use(debugFiles({
         //     keys: false
         // }))
+        .use(hbtmd({
+            pattern: '**/*.md'
+        }))
         .use(markdown())
         .use(excerpts({
             pruneLength: 0
