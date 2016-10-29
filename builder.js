@@ -58,14 +58,16 @@ var registerPartials = function (partials) {
     });
 }
 
-var addFileProperties = function (files, metalsmith, done){
-    for (var key in files) {
-        files[key].path = key;
-        files[key].extension = path.extname(key);
-        files[key].basename = path.basename(key, path.extname(key));
-        log('metalsmith-fileproperties', 'Updated properties for ' + key);
-    }
-    done();
+var addFileProperties = function (options) {
+    return function (files, metalsmith, done){
+        for (var key in files) {
+            files[key].path = key;
+            files[key].extension = path.extname(key);
+            files[key].basename = path.basename(key, path.extname(key));
+            log('metalsmith-fileproperties', 'Updated properties for ' + key);
+        }
+        done();
+    };
 };
 
 var debugFiles = function (options) {
@@ -308,7 +310,7 @@ var build = function (config) {
                 pattern: 'http-errors/*.html'
             },
         }))
-        .use(addFileProperties)
+        .use(addFileProperties())
         .use(permalinks({
 
             //pattern: ':title',
