@@ -2,7 +2,8 @@ var fs      = require('fs'),
     path    = require('path'),
     myArgs  = require('optimist').argv,
     extend  = require('util')._extend,
-    builder = require('./builder.js');
+    debug   = require('debug')('metalsmith-ahdiaz-ssgs')
+    builder = require('./lib/builder.js');
 
 
 var config = {
@@ -77,24 +78,24 @@ try {
 try {
     stats = fs.statSync(config.bundles);
     if (!stats.isDirectory()) {
-        builder.log('metalsmith-ssgs', 'NOTICE: The bundles directory was not found: ' + config.bundles);
+        debug('NOTICE: The bundles directory was not found: %s', config.bundles);
         config.bundles = null;
     }
 } catch (e) {
-    builder.log('metalsmith-ssgs', 'NOTICE: The bundles directory was not found: ' + config.bundles);
+    debug('NOTICE: The bundles directory was not found: %s', config.bundles);
     config.bundles = null;
 }
 
 try {
     stats = fs.statSync(config.output);
     if (stats.isDirectory()) {
-        builder.log('metalsmith-ssgs', 'WARNING: The output directory already exists: ' + config.output);
+        debug('WARNING: The output directory already exists: %s', config.output);
     }
 } catch (e) {}
 
 if (errors.length > 0) {
     errors.forEach(function (err) {
-        builder.log('metalsmith-ssgs', err);
+        debug(err);
     });
     process.exit(1);
 }
