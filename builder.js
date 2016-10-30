@@ -12,6 +12,7 @@ var Metalsmith  = require('metalsmith'),
     serve       = require('metalsmith-serve'),
     watch       = require('metalsmith-watch'),
     msIf        = require('metalsmith-if'),
+    minifier    = require('metalsmith-html-minifier');
     chalk       = require('chalk'),
     moment      = require('moment'),
     Handlebars  = require('handlebars'),
@@ -358,6 +359,10 @@ var build = function (config) {
                 //url: stylus.url()
             }
         }))
+        .use(msIf(
+            ENV === ENV_PROD,
+            minifier('*.html')
+        ))
         .use(msIf(
             config.server,
             serve({
