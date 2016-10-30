@@ -59,7 +59,7 @@ var registerPartials = function (partials) {
 }
 
 var addFileProperties = function (options) {
-    return function (files, metalsmith, done){
+    return function (files, metalsmith, done) {
         for (var key in files) {
             files[key].path = key;
             files[key].extension = path.extname(key);
@@ -86,6 +86,7 @@ var debugFiles = function (options) {
 
 var hbtmd = function (options) {
 
+    var match = require('multimatch');
     options = options || {};
 
     return function (files, metalsmith, done) {
@@ -94,6 +95,10 @@ var hbtmd = function (options) {
         var meta = metalsmith.metadata();
 
         Object.keys(files).forEach(function (key) {
+
+            if (match(key, options.pattern).length === 0) {
+                return;
+            }
 
             var file = files[key];
             var source = file.contents.toString();
