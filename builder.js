@@ -261,7 +261,10 @@ var build = function (config) {
     Metalsmith(path.dirname(config.source))
         .source(config.source)
         .destination(config.output)
-        .use(drafts())
+        .use(msIf(
+            ENV === ENV_PROD,
+            drafts()
+        ))
         .use(metadata({
             globals: 'globals.yml'
         }))
