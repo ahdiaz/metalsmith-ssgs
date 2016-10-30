@@ -342,7 +342,11 @@ var build = function (config) {
             pattern: [
                 '**/*.html',
                 '**/*.php',
-            ]
+            ],
+
+            // Setting this option to true will disable the auto-indent feature.
+            // <pre/> tags have issues with indentation, code blocks for example.
+            preventIndent: true
         }))
         .use(stylus({
             // Set stylus output to compressed
