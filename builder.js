@@ -324,7 +324,7 @@ var build = function (config) {
             linksets: [{
                 match: { collection: 'posts' },
                 pattern: 'blog/:date/:title',
-                // date: function () { return 'mmddyy'; }
+                date: 'YYYY/MM'
             }, {
                 match: { collection: 'pages' },
                 pattern: ':basename'
