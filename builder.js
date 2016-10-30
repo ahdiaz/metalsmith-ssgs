@@ -213,13 +213,12 @@ var bundles = function (options) {
 };
 
 Handlebars.registerHelper('bundles', function (section, options) {
-    var ret = null;
     try {
         var data = options.data.root.bundlesData[section];
-        ret = new Handlebars.SafeString(data);
     } catch (e) {
-        ret = new Buffer('');
+        var data = '';
     }
+    var ret = new Handlebars.SafeString(data);
     return ret;
 });
 
