@@ -1,9 +1,0 @@
-ssgs:
-  image: node:5.9.1-wheezy
-  container_name: ssgs
-  ports:
-    - 127.0.0.1:9000:9000
-  expose:
-    - 9000
-  volumes:
-    - ./:/ssgs
