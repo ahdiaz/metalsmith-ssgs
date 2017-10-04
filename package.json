@@ -32,7 +32,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "patch": "node patch.js"
+    "patch": "node lib/patch.js"
   },
   "author": "Antonio Hernandez <ahdiaz@gmail.com>",
   "license": "MIT"
