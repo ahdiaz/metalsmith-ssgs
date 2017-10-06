@@ -1,6 +1,6 @@
 {
   "name": "metalsmith-ssgs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Static Site Generator",
   "main": "lib/index.js",
   "dependencies": {
@@ -8,7 +8,6 @@
     "handlebars": "^4.0.5",
     "handlebars-helper-bundles": "^1.0",
     "handlebars-helper-formatdate": "^1.0",
-    "handlebars-helper-url": "^1.0",
     "metalsmith": "^2.1.0",
     "metalsmith-better-excerpts": "^0.1.7",
     "metalsmith-bundles": "^1.0",
@@ -20,7 +19,6 @@
     "metalsmith-if": "^0.1.1",
     "metalsmith-layouts": "^1.6.5",
     "metalsmith-markdown": "^0.2.1",
-    "metalsmith-metadata": "0.0.4",
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-rewrite": "^0.1.2",
     "metalsmith-serve": "0.0.7",
