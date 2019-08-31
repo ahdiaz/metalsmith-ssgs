@@ -6,7 +6,6 @@
   "dependencies": {
     "apply-patch": "^0.1.2",
     "handlebars": "^4.0.5",
-    "handlebars-helper-bundles": "^1.0",
     "handlebars-helper-formatdate": "^1.0",
     "metalsmith": "^2.1.0",
     "metalsmith-better-excerpts": "^0.1.7",
