@@ -31,6 +31,10 @@
   "scripts": {
     "patch": "node lib/patch.js"
   },
+  "bin": {
+    "ssgs": "./bin/ssgs.js"
+  },
+  "preferGlobal": true,
   "author": "Antonio Hernandez <ahdiaz@gmail.com>",
   "license": "MIT"
 }
