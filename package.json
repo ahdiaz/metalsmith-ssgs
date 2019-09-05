@@ -28,7 +28,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "patch": "node lib/patch.js"
+    "patch": "node lib/patch.js",
+    "postinstall": "npm run patch"
   },
   "bin": {
     "ssgs": "./bin/ssgs.js"

@@ -6,13 +6,9 @@ TODO: Expand and update this docs.
 
 ## Installation
 
-```
+```bash
 $ npm install -g metalsmith-ssgs
-$ npm run patch
 ```
-
-The second comman will patch metalsmith-permalink, this will fix some issues applying
-date patterns and additionally will add some other features.
 
 ## Usage
 
