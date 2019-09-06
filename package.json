@@ -9,7 +9,7 @@
     "metalsmith": "^2.1.0",
     "metalsmith-better-excerpts": "^0.1.7",
     "metalsmith-bundles": "^1.1.0",
-    "metalsmith-collections": "^0.7.0",
+    "metalsmith-collections": "^0.9.0",
     "metalsmith-define": "^2.1.1",
     "metalsmith-excludes": "^1.0.0",
     "metalsmith-hbt-md": "^1.0.1",
@@ -36,5 +36,9 @@
   },
   "preferGlobal": true,
   "author": "Antonio Hernandez <ahdiaz@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ahdiaz/metalsmith-ssgs.git"
+  }
 }
