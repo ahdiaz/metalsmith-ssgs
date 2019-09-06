@@ -1,25 +1,25 @@
---- ../metalsmith-permalinks/lib/index.js	2016-10-31 20:54:02.000000000 +0100
-+++ ../metalsmith-permalinks/lib/index.js	2016-10-31 20:53:36.000000000 +0100
+--- ../metalsmith-permalinks/lib/index.js 2016-10-31 20:54:02.000000000 +0100
++++ ../metalsmith-permalinks/lib/index.js 2016-10-31 20:53:36.000000000 +0100
 @@ -44,8 +44,6 @@
      };
    }
-
+ 
 -  var dupes = {};
 -
    function findLinkset(file) {
-     var set = find(linksets, function(ls) {
+     var set = find(linksets, function(ls) { 
          return Object.keys(ls.match).reduce(function(sofar, key) {
 @@ -69,36 +67,32 @@
        var data = files[file];
        debug('checking file: %s', file);
-
+ 
 -      if (!html(file)) return;
 +      if (!match(file, options.selectors)) return;
        if (data['permalink'] === false) return;
-
+ 
        var linkset = merge({}, findLinkset(data), defaultLinkset);
        debug('applying pattern: %s to file: %s', linkset.pattern, file);
-
+ 
 -      var path = replace(linkset.pattern, data, linkset) || resolve(file);
 -      var fam = family(file, files);
 +      // Now `:basename` can be used as pattern in a linkset
@@ -27,7 +27,7 @@
 +
 +      var parsedPath = replace(linkset.pattern, data, linkset) || resolve(file);
 +      var sibs = siblings(file, files, options.selectors);
-
+ 
 -      if (linkset.relative) {
 -        // track duplicates for relative files to maintain references
 -        for (var key in fam) {
@@ -40,11 +40,11 @@
 +        delete files[key];
 +        files[sibpath] = sibs[key];
        }
-
+ 
        // add to path data for use in links in templates
 -      data.path = '.' == path ? '' : path;
 +      data.path = '.' == parsedPath ? '' : parsedPath;
-
+ 
 -      var out = join(path, options.indexFile || 'index.html');
 +      var out = join(parsedPath, options.indexFile || 'index.html');
        delete files[file];
@@ -58,10 +58,10 @@
 -    })
    };
  }
-
+ 
 @@ -132,14 +131,14 @@
  }
-
+ 
  /**
 - * Get a list of sibling and children files for a given `file` in `files`.
 + * Get a list of sibling files for a given `file` in `files`.
@@ -70,12 +70,12 @@
   * @param {Object} files
   * @return {Object}
   */
-
+ 
 -function family(file, files){
 +function siblings(file, files, patterns) {
    var dir = dirname(file);
    var ret = {};
-
+ 
 @@ -148,9 +147,11 @@
    for (var key in files) {
      if (key == file) continue;
@@ -88,11 +88,11 @@
 +    if (dir.indexOf(keydir) != 0) continue;
 +    ret[key] = files[key];
    }
-
+ 
    return ret;
 @@ -213,12 +214,19 @@
  }
-
+ 
  /**
 - * Check whether a file is an HTML file.
 + * Check whether a file has to be processed.
@@ -101,7 +101,7 @@
 + * @param {Array} patterns
   * @return {Boolean}
   */
-
+ 
 -function html(path){
 -  return /.html/.test(extname(path));
 +function match(path, patterns) {
@@ -113,3 +113,4 @@
 +  }
 +  return false;
  }
+
