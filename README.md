@@ -24,10 +24,20 @@ Several options can be provided to the executable:
         source: '/www/src',                     // Where to find the markdown sources
         layouts: '/www/templates',              // Where to find the layouts
         defaultLayout: 'main.hbs',              // The default layout file name
+        tagsLayout: 'tags.hbs',                 // The default layout file name for the tags list page
         partials: '/www/templates/partials',    // Where to find the partials
         bundles: '/www/bundles',                // Where to find the bundles
         output: '/www/public',                  // Where to write the resulting HTML
         exclude: [ 'draft' ],                   // Tags to exclude during the build process
+        plugins: {                              // Plugins specific options
+
+            collections: {},
+
+            permalinks: {
+                indexFile: 'index.html',
+                relative: false
+            }
+        },
         config: 'ssgs.production.json',         // Used as an application parameter will read settings from that file
     }
 
