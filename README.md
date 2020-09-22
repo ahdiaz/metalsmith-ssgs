@@ -20,9 +20,10 @@ Several options can be provided to the executable:
         port: 9000,                             // The port the development server should listen on
         watch: false,                           // Watch for changes in the sources and rebuild the site automatically
         compress: true,                         // Compress files (HTML, CSS, Javascript)
-        base_url: '//localhost',                // Your site base URL
+        baseUrl: '//localhost',                 // Your site base URL
         source: '/www/src',                     // Where to find the markdown sources
         layouts: '/www/templates',              // Where to find the layouts
+        defaultLayout: 'main.hbs',              // The default layout file name
         partials: '/www/templates/partials',    // Where to find the partials
         bundles: '/www/bundles',                // Where to find the bundles
         output: '/www/public',                  // Where to write the resulting HTML
