@@ -1,1 +1,3 @@
 site_name: metalsmith-ssgs
+theme:
+    name: readthedocs
