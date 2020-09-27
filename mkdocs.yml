@@ -4,6 +4,7 @@ site_author: Antonio Hernandez ahdiaz@gmail.com
 site_description: A static site generator based in metalsmith and a collection of plugins.
 copyright: MIT License. Copyright © 2016 Antonio Hernandez <ahdiaz@gmail.com>
 theme: readthedocs
+site_dir: _docs_build
 nav:
   - index.md
   - settings.md

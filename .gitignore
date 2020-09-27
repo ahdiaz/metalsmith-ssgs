@@ -1,3 +1,9 @@
-*.swp
+.*.swp
+._*
+.DS_Store
 *.log
+
+.npmrc
 node_modules/
+
+_docs_build/
