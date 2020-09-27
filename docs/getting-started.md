@@ -182,9 +182,6 @@ Returns TRUE if the current page has a specific tag.
         <p>This is a draft</p>
     {{/hasTag}}
 
-### `isTagList`
-
-What was this for?
 
 [metalsmith-hbt-md]: https://www.npmjs.com/package/metalsmith-hbt-md
 [metalsmith-define]: https://www.npmjs.com/package/metalsmith-define
